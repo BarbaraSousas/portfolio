@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #0F0F14;
+  --accent-neon: #FF4F9A;
+  --accent-blush: #FFD1E6;
+  --text-secondary: #B4B4C2;
+  --text-primary: #FFFFFF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  /* Enable hardware acceleration */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Sora', sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-neon);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blush);
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--accent-neon);
+  color: var(--text-primary);
+}
+
+::-moz-selection {
+  background-color: var(--accent-neon);
+  color: var(--text-primary);
+}
+
+/* Utility classes */
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent-neon to-accent-blush bg-clip-text text-transparent;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-2;
+    will-change: transform;
+  }
+
+  .glow-neon {
+    box-shadow: 0 0 20px rgba(255, 79, 154, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  .glow-neon-lg {
+    box-shadow: 0 0 30px rgba(255, 79, 154, 0.5);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  /* Smooth animation helper */
+  .smooth-transform {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 79, 154, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 79, 154, 0.6);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+  will-change: box-shadow;
+}
+
+/* Smooth fade-in animation */
+@keyframes smoothFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: smoothFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Responsive font sizes using clamp */
+.text-hero {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.text-section-title {
+  font-size: clamp(1.875rem, 4vw, 2.5rem);
+}
+
+.text-card-title {
+  font-size: clamp(1.5rem, 3vw, 1.875rem);
+}
