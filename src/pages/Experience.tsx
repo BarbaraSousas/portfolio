@@ -49,7 +49,6 @@ const ExperienceCard = ({ experience, index }: { experience: typeof experiences[
             style={{ willChange: 'transform' }}
             className="group bg-gradient-to-br from-accent-neon/5 to-accent-blush/5 rounded-card p-6 sm:p-8 border border-accent-neon/20 hover:border-accent-neon/50 hover:shadow-neon transition-all duration-300"
           >
-            {/* Company Logo Placeholder */}
             <div
               className="w-16 h-16 rounded-lg mb-4 flex items-center justify-center font-bold text-white text-xl"
               style={{ backgroundColor: experience.logoColor }}

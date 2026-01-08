@@ -42,7 +42,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="flex flex-col items-center">
-            <h4 className="text-text-primary font-semibold mb-4">Quick Links</h4>
+            {/* <h4 className="text-text-primary font-semibold mb-4">Quick Links</h4>
             <nav className="flex flex-wrap justify-center gap-4">
               <a
                 href="/"
@@ -68,7 +68,7 @@ const Footer = () => {
               >
                 {t.nav.contact}
               </a>
-            </nav>
+            </nav> */}
           </div>
 
           {/* Social Links */}

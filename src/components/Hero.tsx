@@ -196,24 +196,13 @@ const Hero = () => {
               {/* Inner Glow - Optimized */}
               <div className="absolute inset-2 rounded-full bg-gradient-to-r from-accent-neon to-accent-blush opacity-40 animate-pulse-glow" />
 
-              {/* Profile Image Container */}
               <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-accent-neon/50 shadow-neon-lg">
-                {/* Placeholder - Replace with actual image */}
                 <div className="w-full h-full bg-gradient-to-br from-accent-neon/30 to-accent-blush/30 flex items-center justify-center">
-                  {/* Uncomment when you add your photo */}
                   <img
                     src="/assets/profile-photo.png"
                     alt="Barbara Araújo"
                     className="w-full h-full object-cover"
                   />
-                  {/* <div className="text-center p-8">
-                    <p className="text-text-secondary text-sm sm:text-base">
-                      Add your photo to:
-                    </p>
-                    <p className="text-accent-neon font-mono text-xs sm:text-sm mt-2">
-                      /src/assets/profile-photo.jpg
-                    </p>
-                  </div> */}
                 </div>
               </div>
             </div>

@@ -1,8 +1,94 @@
 import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { Code2, ExternalLink, Github, X, Smartphone } from 'lucide-react';
+import { Code2, ExternalLink, Github, X, Smartphone, ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects, Project } from '../data/projects';
 import { useLanguage } from '../hooks/useLanguage';
+
+const ImageCarousel = ({ images, projectTitle, isMobile }: { images: string[]; projectTitle: string; isMobile: boolean }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const goToPrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  if (images.length === 0) return null;
+
+  return (
+    <div className="relative w-full">
+      {/* Main Image Container */}
+      <div className={`relative ${isMobile ? 'h-[500px] sm:h-[600px]' : 'h-[400px] sm:h-[500px]'} bg-gradient-to-br from-accent-neon/10 to-accent-blush/10 rounded-lg overflow-hidden flex items-center justify-center`}>
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentIndex}
+            src={images[currentIndex]}
+            alt={`${projectTitle} screenshot ${currentIndex + 1}`}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.3 }}
+            className="max-w-full max-h-full object-contain"
+          />
+        </AnimatePresence>
+
+        {/* Navigation Buttons */}
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={goToPrev}
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-bg-primary/80 backdrop-blur-sm border border-accent-neon/30 text-accent-neon rounded-full hover:bg-accent-neon/20 transition-colors z-10"
+              aria-label="Previous image"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              onClick={goToNext}
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-bg-primary/80 backdrop-blur-sm border border-accent-neon/30 text-accent-neon rounded-full hover:bg-accent-neon/20 transition-colors z-10"
+              aria-label="Next image"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </>
+        )}
+
+        {/* Image Counter */}
+        <div className="absolute top-4 right-4 px-3 py-1 bg-bg-primary/80 backdrop-blur-sm border border-accent-neon/30 text-text-primary rounded-full text-sm">
+          {currentIndex + 1} / {images.length}
+        </div>
+      </div>
+
+      {/* Thumbnail Indicators */}
+      {images.length > 1 && (
+        <div className="flex gap-2 mt-4 overflow-x-auto pb-2 justify-center">
+          {images.map((image, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                index === currentIndex
+                  ? 'border-accent-neon shadow-neon'
+                  : 'border-accent-neon/20 hover:border-accent-neon/50'
+              }`}
+            >
+              <img
+                src={image}
+                alt={`Thumbnail ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => void }) => {
   const { language, t } = useLanguage();
@@ -49,23 +135,13 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
 
         {/* Content */}
         <div className="p-6 space-y-6">
-          {/* Images */}
+          {/* Image Carousel */}
           {project.images.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {project.images.map((image, index) => (
-                <div
-                  key={index}
-                  className="rounded-lg overflow-hidden bg-gradient-to-br from-accent-neon/10 to-accent-blush/10 aspect-video flex items-center justify-center"
-                >
-                  {/* Placeholder - Replace with actual images */}
-                  <p className="text-text-secondary text-sm text-center p-4">
-                    Screenshot {index + 1}
-                    <br />
-                    <span className="text-xs">{image}</span>
-                  </p>
-                </div>
-              ))}
-            </div>
+            <ImageCarousel
+              images={project.images}
+              projectTitle={project.title}
+              isMobile={project.type === 'mobile'}
+            />
           )}
 
           {/* Long Description */}
@@ -164,12 +240,22 @@ const ProjectCard = ({ project }: { project: Project }) => {
         onClick={() => setIsModalOpen(true)}
         className="group bg-gradient-to-br from-accent-neon/5 to-accent-blush/5 rounded-card overflow-hidden border border-accent-neon/20 hover:border-accent-neon/50 hover:shadow-neon transition-all duration-300 cursor-pointer"
       >
-        {/* Project Image/Placeholder */}
-        <div className="relative aspect-video bg-gradient-to-br from-accent-neon/20 to-accent-blush/20 overflow-hidden">
-          {/* Placeholder - Replace with actual image */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Code2 size={48} className="text-accent-neon/50" />
-          </div>
+        <div className={`relative ${
+          project.type === 'mobile' ? 'aspect-[16/9]' : 'aspect-video'
+        } bg-gradient-to-br from-accent-neon/20 to-accent-blush/20 overflow-hidden flex items-center justify-center`}>
+          {project.images.length > 0 ? (
+            <img
+              src={project.images[0]}
+              alt={project.title}
+              className={`w-full h-full ${
+                project.type === 'mobile' ? 'object-contain' : 'object-cover'
+              } object-center`}
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Code2 size={48} className="text-accent-neon/50" />
+            </div>
+          )}
 
           {/* Overlay on Hover */}
           <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-bg-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
