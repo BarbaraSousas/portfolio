@@ -80,7 +80,7 @@ const AnimatedRoutes = () => {
 function App() {
   return (
     <LanguageProvider>
-      <Router>
+      <Router basename="/portfolio">
         <div className="flex flex-col min-h-screen bg-bg-primary">
           <Header />
           <main className="flex-grow">
