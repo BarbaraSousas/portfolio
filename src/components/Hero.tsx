@@ -199,7 +199,7 @@ const Hero = () => {
               <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-accent-neon/50 shadow-neon-lg">
                 <div className="w-full h-full bg-gradient-to-br from-accent-neon/30 to-accent-blush/30 flex items-center justify-center">
                   <img
-                    src="/assets/profile-photo.png"
+                    src="/portfolio/assets/profile-photo.png"
                     alt="Barbara Araújo"
                     className="w-full h-full object-cover"
                   />
