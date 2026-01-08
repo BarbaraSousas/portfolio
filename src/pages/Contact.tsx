@@ -281,12 +281,6 @@ const Contact = () => {
                   {t.contact.form.error}
                 </motion.div>
               )}
-
-              {/* Formspree Notice */}
-              <p className="text-text-secondary text-sm text-center">
-                💡 <strong>Note:</strong> Update FORMSPREE_ENDPOINT in{' '}
-                <code className="text-accent-neon">src/data/contact.ts</code> to enable the form.
-              </p>
             </form>
           </motion.div>
         </div>
