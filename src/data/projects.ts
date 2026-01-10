@@ -23,6 +23,57 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'subscription-radar',
+    title: 'Subscription Radar',
+    description: {
+      en: 'Track recurring expenses, set renewal reminders, forecast spending, and analyze subscriptions by category',
+      pt: 'Rastreie despesas recorrentes, defina lembretes de renovação, preveja gastos e analise assinaturas por categoria',
+    },
+    longDescription: {
+      en: 'A comprehensive subscription management platform built with Next.js and FastAPI. Subscription Radar helps you track all your recurring expenses, set renewal reminders, forecast future spending, and analyze your subscriptions by category. Never miss a renewal or lose track of your monthly spending again!',
+      pt: 'Uma plataforma completa de gerenciamento de assinaturas construída com Next.js e FastAPI. O Subscription Radar ajuda você a rastrear todas as suas despesas recorrentes, definir lembretes de renovação, prever gastos futuros e analisar suas assinaturas por categoria. Nunca mais perca uma renovação ou perca o controle dos seus gastos mensais!',
+    },
+    technologies: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'Tailwind CSS',
+      'FastAPI',
+      'SQLModel',
+      'PostgreSQL',
+      'Axios',
+    ],
+    type: 'fullstack',
+    githubUrl: 'https://github.com/BarbaraSousas/subscription-radar',
+    images: [
+      '/portfolio/projects/subscription-radar-1.png',
+      '/portfolio/projects/subscription-radar-2.png',
+      '/portfolio/projects/subscription-radar-3.png',
+      '/portfolio/projects/subscription-radar-4.png',
+    ],
+    featured: false,
+    features: {
+      en: [
+        'Track all recurring subscriptions in one place',
+        'Set customizable renewal reminders',
+        'Forecast future spending with analytics',
+        'Categorize subscriptions for better organization',
+        'View monthly and yearly totals',
+        'Dashboard with key metrics and insights',
+        'Full-stack architecture with Next.js and FastAPI',
+      ],
+      pt: [
+        'Rastreie todas as assinaturas recorrentes em um só lugar',
+        'Defina lembretes de renovação personalizáveis',
+        'Preveja gastos futuros com análises',
+        'Categorize assinaturas para melhor organização',
+        'Visualize totais mensais e anuais',
+        'Dashboard com métricas e insights principais',
+        'Arquitetura full-stack com Next.js e FastAPI',
+      ],
+    },
+  },
+  {
     id: 'divisor-despesas',
     title: 'Divisor de Despesas',
     description: {
@@ -53,7 +104,7 @@ export const projects: Project[] = [
       '/portfolio/projects/divisor-despesas-5.jpeg',
       '/portfolio/projects/divisor-despesas-6.jpeg',
     ],
-    featured: true,
+    featured: false,
     features: {
       en: [
         'Create groups and invite members via shareable links',

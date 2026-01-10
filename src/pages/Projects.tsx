@@ -238,11 +238,25 @@ const ProjectCard = ({ project }: { project: Project }) => {
         transition={{ duration: 0.5 }}
         whileHover={{ scale: 1.02, y: -8 }}
         onClick={() => setIsModalOpen(true)}
-        className="group bg-gradient-to-br from-accent-neon/5 to-accent-blush/5 rounded-card overflow-hidden border border-accent-neon/20 hover:border-accent-neon/50 hover:shadow-neon transition-all duration-300 cursor-pointer"
+        className="group relative bg-gradient-to-br from-accent-neon/5 to-accent-blush/5 rounded-card border border-accent-neon/20 hover:border-accent-neon/50 hover:shadow-neon transition-all duration-300 cursor-pointer"
       >
+        {/* Featured Ribbon - Outside overflow container */}
+        {project.featured && (
+          <div className="absolute top-0 right-0 w-0 h-0 overflow-visible z-10">
+            <div className="relative">
+              <div className="absolute top-0 right-0 w-20 h-20 transform origin-top-right rotate-45 bg-gradient-to-br from-accent-neon to-accent-blush shadow-lg translate-x-[28px] translate-y-[-28px]"></div>
+              <div className="absolute top-[14px] right-[-10px] transform rotate-45 text-center">
+                <span className="text-white font-bold text-[10px] uppercase tracking-wider drop-shadow-lg whitespace-nowrap">
+                  {t.projects.tags.featured}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className={`relative ${
           project.type === 'mobile' ? 'aspect-[16/9]' : 'aspect-video'
-        } bg-gradient-to-br from-accent-neon/20 to-accent-blush/20 overflow-hidden flex items-center justify-center`}>
+        } bg-gradient-to-br from-accent-neon/20 to-accent-blush/20 overflow-hidden flex items-center justify-center rounded-t-card`}>
           {project.images.length > 0 ? (
             <img
               src={project.images[0]}
@@ -265,20 +279,15 @@ const ProjectCard = ({ project }: { project: Project }) => {
             </span>
           </div>
 
-          {/* Tags */}
-          <div className="absolute top-4 left-4 flex gap-2">
-            {project.featured && (
-              <span className="px-3 py-1 bg-gradient-to-r from-accent-neon to-accent-blush text-white rounded-full text-xs font-medium">
-                {t.projects.tags.featured}
-              </span>
-            )}
-            {project.type === 'mobile' && (
+          {/* Mobile Tag */}
+          {project.type === 'mobile' && (
+            <div className="absolute top-4 left-4">
               <span className="px-3 py-1 bg-bg-primary/80 backdrop-blur-sm border border-accent-neon/30 text-accent-neon rounded-full text-xs font-medium flex items-center gap-1">
                 <Smartphone size={14} />
                 {t.projects.tags.mobile}
               </span>
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* Project Info */}
