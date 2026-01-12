@@ -18,6 +18,12 @@ import {
   SiNextdotjs,
   SiVuedotjs,
   SiGraphql,
+  SiNestjs,
+  SiExpress,
+  SiDjango,
+  SiFastapi,
+  SiApollographql,
+  SiTestinglibrary,
 } from 'react-icons/si';
 import { useLanguage } from '../hooks/useLanguage';
 
@@ -44,14 +50,20 @@ const TechStack = () => {
 
     // Backend
     { name: 'Node.js', icon: SiNodedotjs, color: '#339933', category: 'backend' },
+    { name: 'NestJS', icon: SiNestjs, color: '#E0234E', category: 'backend' },
+    { name: 'Express', icon: SiExpress, color: '#FFFFFF', category: 'backend' },
     { name: 'Python', icon: SiPython, color: '#3776AB', category: 'backend' },
+    { name: 'Django', icon: SiDjango, color: '#092E20', category: 'backend' },
+    { name: 'FastAPI', icon: SiFastapi, color: '#009688', category: 'backend' },
     { name: 'GraphQL', icon: SiGraphql, color: '#E10098', category: 'backend' },
+    { name: 'Apollo', icon: SiApollographql, color: '#311C87', category: 'backend' },
     { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1', category: 'backend' },
     { name: 'MongoDB', icon: SiMongodb, color: '#47A248', category: 'backend' },
     { name: 'Redis', icon: SiRedis, color: '#DC382D', category: 'backend' },
 
     // Testing & Tools
     { name: 'Jest', icon: SiJest, color: '#C21325', category: 'testing' },
+    { name: 'React Testing Library', icon: SiTestinglibrary, color: '#E33332', category: 'testing' },
     { name: 'Cypress', icon: SiCypress, color: '#17202C', category: 'testing' },
     { name: 'Docker', icon: SiDocker, color: '#2496ED', category: 'testing' },
     { name: 'Git', icon: SiGit, color: '#F05032', category: 'testing' },
