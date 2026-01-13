@@ -24,6 +24,7 @@ import {
   SiFastapi,
   SiApollographql,
   SiTestinglibrary,
+  SiPrisma,
 } from 'react-icons/si';
 import { useLanguage } from '../hooks/useLanguage';
 
@@ -57,6 +58,7 @@ const TechStack = () => {
     { name: 'FastAPI', icon: SiFastapi, color: '#009688', category: 'backend' },
     { name: 'GraphQL', icon: SiGraphql, color: '#E10098', category: 'backend' },
     { name: 'Apollo', icon: SiApollographql, color: '#311C87', category: 'backend' },
+    { name: 'Prisma', icon: SiPrisma, color: '#2D3748', category: 'backend' },
     { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1', category: 'backend' },
     { name: 'MongoDB', icon: SiMongodb, color: '#47A248', category: 'backend' },
     { name: 'Redis', icon: SiRedis, color: '#DC382D', category: 'backend' },
@@ -97,33 +99,46 @@ const TechStack = () => {
   };
 
   return (
-    <section ref={ref} className="py-16 sm:py-24 bg-gradient-to-b from-bg-primary to-bg-primary/50">
+    <section ref={ref} className="py-16 sm:py-24 bg-beige dark:bg-dark-surface/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header - Editorial Style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12 sm:mb-16"
+          className="mb-12 sm:mb-16"
         >
-          <h2 className="text-section-title font-display font-bold text-text-primary mb-4">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="h-px flex-grow bg-brown/20 dark:bg-dark-border" />
+            <span className="text-xs text-brown dark:text-dark-text-secondary uppercase tracking-widest">Tech Stack</span>
+            <div className="h-px flex-grow bg-brown/20 dark:bg-dark-border" />
+          </div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-display font-black text-brown-dark dark:text-dark-text text-center mb-4">
             {t.home.techStack.title}
           </h2>
-          <p className="text-text-secondary text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-brown dark:text-dark-text-secondary text-base sm:text-lg max-w-2xl mx-auto text-center">
             {t.home.techStack.subtitle}
           </p>
         </motion.div>
 
         {categories.map((category, categoryIndex) => (
-          <div key={category.key} className="mb-12 last:mb-0">
-            <motion.h3
+          <div key={category.key} className="mb-16 last:mb-0">
+            {/* Category Header */}
+            <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
-              className="text-xl sm:text-2xl font-semibold text-accent-neon mb-6 text-center sm:text-left"
+              className="mb-8"
             >
-              {category.label}
-            </motion.h3>
+              <div className="inline-block relative">
+                <h3 className="text-2xl sm:text-3xl font-display font-bold text-brick dark:text-brick-light">
+                  {category.label}
+                </h3>
+                <div className="absolute -bottom-1 left-0 w-full h-1 bg-brick/20 dark:bg-brick-light/20" />
+              </div>
+            </motion.div>
 
+            {/* Technologies Grid - Editorial Style */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -136,18 +151,15 @@ const TechStack = () => {
                   <motion.div
                     key={tech.name}
                     variants={itemVariants}
-                    whileHover={{ scale: 1.05, y: -8 }}
-                    className="group relative bg-gradient-to-br from-accent-neon/5 to-accent-blush/5 rounded-card p-6 flex flex-col items-center justify-center gap-3 hover:shadow-neon transition-all duration-300 cursor-pointer border border-accent-neon/10 hover:border-accent-neon/30"
+                    whileHover={{ scale: 1.03, y: -4 }}
+                    className="group relative bg-cream dark:bg-dark-bg rounded-card p-6 flex flex-col items-center justify-center gap-3 hover:shadow-editorial-lg transition-all duration-300 cursor-pointer border-2 border-brown/10 dark:border-dark-border hover:border-brick/30 dark:hover:border-brick-light/30"
                   >
-                    {/* Glow Effect on Hover */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-accent-neon/0 to-accent-blush/0 group-hover:from-accent-neon/10 group-hover:to-accent-blush/10 rounded-card transition-all duration-300" />
-
                     <tech.icon
-                      className="relative z-10 transition-all duration-300"
+                      className="relative z-10 transition-all duration-300 group-hover:scale-110"
                       size={40}
                       style={{ color: tech.color }}
                     />
-                    <span className="relative z-10 text-text-primary text-sm font-medium text-center">
+                    <span className="relative z-10 text-brown-dark dark:text-dark-text text-sm font-medium text-center">
                       {tech.name}
                     </span>
                   </motion.div>

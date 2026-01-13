@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { Sparkles, FolderOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
 
@@ -12,9 +12,8 @@ const Hero = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: 0.1,
         delayChildren: 0.2,
-        ease: [0.4, 0, 0.2, 1], // Custom cubic-bezier for smoother motion
       },
     },
   };
@@ -25,207 +24,144 @@ const Hero = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.7,
-        ease: [0.4, 0, 0.2, 1], // Smooth cubic-bezier easing
-      },
-    },
-  };
-
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.9,
-        ease: [0.34, 1.56, 0.64, 1], // Smooth spring-like easing without rotation
-        delay: 0.2,
+        duration: 0.6,
       },
     },
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 sm:pt-0">
-      {/* Animated Background Elements - Optimized */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 sm:px-6 lg:px-8 pt-20">
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30 dark:opacity-20">
+        {/* Decorative circles */}
         <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.08, 0.15, 0.08],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: [0.4, 0, 0.6, 1],
-            repeatType: 'reverse',
-          }}
-          style={{ willChange: 'transform, opacity' }}
-          className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-accent-neon/20 to-transparent rounded-full blur-3xl"
+          animate={{ y: [0, 20, 0], rotate: [0, 5, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 right-1/4 w-32 h-32 rounded-full border-2 border-dashed border-brick/20 dark:border-brick-light/20"
         />
         <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.08, 0.12, 0.08],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: [0.4, 0, 0.6, 1],
-            repeatType: 'reverse',
-            delay: 3,
-          }}
-          style={{ willChange: 'transform, opacity' }}
-          className="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-accent-blush/20 to-transparent rounded-full blur-3xl"
+          animate={{ y: [0, -15, 0], rotate: [0, -5, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="absolute bottom-1/3 left-1/4 w-24 h-24 rounded-full border-2 border-brown/20 dark:border-brown-light/20"
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
+          className="text-center space-y-6 sm:space-y-8"
         >
-          {/* Text Content */}
-          <div className="text-center lg:text-left order-2 lg:order-1">
-            <motion.p
-              variants={itemVariants}
-              className="text-accent-neon text-sm sm:text-base font-medium mb-2 sm:mb-4"
-            >
-              {t.hero.greeting}
-            </motion.p>
-
-            <motion.h1
-              variants={itemVariants}
-              className="text-hero font-display font-bold text-text-primary mb-3 sm:mb-6"
-            >
-              {t.hero.name}
-            </motion.h1>
-
-            <motion.h2
-              variants={itemVariants}
-              className="text-xl sm:text-2xl lg:text-3xl font-semibold text-gradient mb-4 sm:mb-6"
-            >
-              {t.hero.title}
-            </motion.h2>
-
-            <motion.p
-              variants={itemVariants}
-              className="text-text-secondary text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0"
-            >
-              {t.hero.description}
-            </motion.p>
-
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-            >
-              <motion.button
-                whileHover={{ scale: 1.03, boxShadow: '0 0 25px rgba(255, 79, 154, 0.5)' }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                onClick={() => navigate('/projects')}
-                style={{ willChange: 'transform' }}
-                className="group px-6 sm:px-8 py-3 sm:py-4 bg-accent-neon text-white font-semibold rounded-card hover:bg-accent-neon/90 transition-colors duration-300 flex items-center justify-center gap-2 shadow-neon"
-              >
-                {t.hero.cta.projects}
-                <ArrowRight
-                  className="group-hover:translate-x-1 transition-transform"
-                  size={20}
-                />
-              </motion.button>
-
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                onClick={() => navigate('/contact')}
-                style={{ willChange: 'transform' }}
-                className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-accent-neon text-accent-neon font-semibold rounded-card hover:bg-accent-neon/10 transition-colors duration-300 flex items-center justify-center gap-2"
-              >
-                {t.hero.cta.contact}
-              </motion.button>
-            </motion.div>
-
-            {/* Quick Stats */}
-            <motion.div
-              variants={itemVariants}
-              className="grid grid-cols-3 gap-4 mt-8 sm:mt-12 pt-8 sm:pt-12 border-t border-accent-neon/20"
-            >
-              <div className="text-center lg:text-left">
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient mb-1">
-                  8+
-                </h3>
-                <p className="text-text-secondary text-xs sm:text-sm">Years Exp.</p>
-              </div>
-              <div className="text-center lg:text-left">
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient mb-1">
-                  15+
-                </h3>
-                <p className="text-text-secondary text-xs sm:text-sm">Projects</p>
-              </div>
-              <div className="text-center lg:text-left">
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient mb-1">
-                  7
-                </h3>
-                <p className="text-text-secondary text-xs sm:text-sm">Companies</p>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Profile Image */}
+          {/* Top Label with Icon */}
           <motion.div
-            variants={imageVariants}
-            className="flex justify-center lg:justify-end order-1 lg:order-2"
+            variants={itemVariants}
+            className="flex items-center justify-center gap-2"
+          >
+            <Sparkles className="w-5 h-5 text-brick dark:text-brick-light" />
+            <span className="text-sm sm:text-base text-brown dark:text-dark-text-secondary font-medium uppercase tracking-wider">
+              {t.hero.greeting}
+            </span>
+          </motion.div>
+
+          {/* Large Title - Editorial Style */}
+          <motion.h1
+            variants={itemVariants}
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black text-brown-dark dark:text-dark-text leading-none tracking-tight"
+          >
+            {t.hero.name}
+          </motion.h1>
+
+          {/* Subtitle with Decorative Elements */}
+          <motion.div
+            variants={itemVariants}
+            className="relative inline-block"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif italic text-gradient mb-2">
+              {t.hero.title}
+            </h2>
+            <motion.svg
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 1.5, delay: 0.8 }}
+              className="absolute -bottom-2 left-0 w-full h-3"
+              viewBox="0 0 200 10"
+              preserveAspectRatio="none"
+            >
+              <motion.path
+                d="M0,5 Q50,0 100,5 T200,5"
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="none"
+                className="text-brick dark:text-brick-light opacity-50"
+              />
+            </motion.svg>
+          </motion.div>
+
+          {/* Description */}
+          <motion.p
+            variants={itemVariants}
+            className="text-base sm:text-lg md:text-xl text-brown dark:text-dark-text-secondary leading-relaxed max-w-3xl mx-auto px-4"
+          >
+            {t.hero.description}
+          </motion.p>
+
+          {/* Stats Row - Editorial Style */}
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 pt-8 sm:pt-12"
           >
             <div className="relative">
-              {/* Animated Glow Ring - Optimized */}
-              <motion.div
-                animate={{
-                  rotate: 360,
-                }}
-                transition={{
-                  duration: 25,
-                  repeat: Infinity,
-                  ease: 'linear',
-                }}
-                style={{ willChange: 'transform' }}
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-accent-neon via-accent-blush to-accent-neon opacity-60 blur-xl"
-              />
+              <div className="absolute -inset-4 border-2 border-dashed border-brown/20 dark:border-dark-border rounded-lg" />
+              <div className="relative text-center p-4">
+                <div className="text-4xl sm:text-5xl font-bold text-gradient mb-1">8+</div>
+                <div className="text-xs sm:text-sm text-brown dark:text-dark-text-secondary uppercase tracking-wider">Years Exp.</div>
+              </div>
+            </div>
 
-              {/* Inner Glow - Optimized */}
-              <div className="absolute inset-2 rounded-full bg-gradient-to-r from-accent-neon to-accent-blush opacity-40 animate-pulse-glow" />
+            <div className="relative">
+              <div className="absolute -inset-4 border-2 border-dashed border-brown/20 dark:border-dark-border rounded-lg" />
+              <div className="relative text-center p-4">
+                <div className="text-4xl sm:text-5xl font-bold text-gradient mb-1">15+</div>
+                <div className="text-xs sm:text-sm text-brown dark:text-dark-text-secondary uppercase tracking-wider">Projects</div>
+              </div>
+            </div>
 
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-accent-neon/50 shadow-neon-lg">
-                <div className="w-full h-full bg-gradient-to-br from-accent-neon/30 to-accent-blush/30 flex items-center justify-center">
-                  <img
-                    src="/portfolio/assets/profile-photo.png"
-                    alt="Barbara Araújo"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+            <div className="relative">
+              <div className="absolute -inset-4 border-2 border-dashed border-brown/20 dark:border-dark-border rounded-lg" />
+              <div className="relative text-center p-4">
+                <div className="text-4xl sm:text-5xl font-bold text-gradient mb-1">7</div>
+                <div className="text-xs sm:text-sm text-brown dark:text-dark-text-secondary uppercase tracking-wider">Companies</div>
               </div>
             </div>
           </motion.div>
+
+          {/* CTA Buttons */}
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8"
+          >
+            <motion.button
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => navigate('/projects')}
+              className="group px-8 py-4 bg-brick dark:bg-brick-light text-white font-semibold rounded-card hover:shadow-editorial-lg transition-all duration-300 flex items-center gap-2"
+            >
+              <FolderOpen size={20} />
+              {t.hero.cta.projects}
+            </motion.button>
+
+            <motion.button
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => navigate('/contact')}
+              className="px-8 py-4 border-2 border-brick dark:border-brick-light text-brick dark:text-brick-light font-semibold rounded-card hover:bg-brick/10 dark:hover:bg-brick-light/10 transition-all duration-300"
+            >
+              {t.hero.cta.contact}
+            </motion.button>
+          </motion.div>
         </motion.div>
       </div>
-
-      {/* Scroll Indicator - Optimized */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden sm:block"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: [0.4, 0, 0.6, 1] }}
-          style={{ willChange: 'transform' }}
-          className="w-6 h-10 border-2 border-accent-neon/50 rounded-full flex justify-center pt-2"
-        >
-          <div className="w-1.5 h-1.5 bg-accent-neon rounded-full" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 };

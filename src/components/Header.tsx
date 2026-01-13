@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
+import { useTheme } from '../hooks/useTheme';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
 
   useEffect(() => {
@@ -47,7 +49,7 @@ const Header = () => {
       transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-bg-primary/95 backdrop-blur-md shadow-lg shadow-accent-neon/10'
+          ? 'bg-cream/95 dark:bg-dark-bg/95 backdrop-blur-md shadow-soft-lg'
           : 'bg-transparent'
       }`}
     >
@@ -74,28 +76,39 @@ const Header = () => {
                 <span
                   className={`${
                     isActive(item.path)
-                      ? 'text-accent-neon'
-                      : 'text-text-secondary hover:text-text-primary'
-                  }`}
+                      ? 'text-brick dark:text-brick-light'
+                      : 'text-brown dark:text-dark-text-secondary hover:text-brown-dark dark:hover:text-dark-text'
+                  } transition-colors duration-200`}
                 >
                   {item.label}
                 </span>
                 {isActive(item.path) && (
                   <motion.div
                     layoutId="navbar-indicator"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent-neon"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-brick dark:bg-brick-light"
                     initial={false}
                   />
                 )}
               </Link>
             ))}
 
+            {/* Theme Toggle */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleTheme}
+              className="ml-4 p-2 text-brown dark:text-dark-text-secondary hover:text-brick dark:hover:text-brick-light transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+            </motion.button>
+
             {/* Language Toggle */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={toggleLanguage}
-              className="ml-4 px-3 py-1.5 text-sm font-medium rounded-lg border border-accent-neon/30 text-accent-neon hover:bg-accent-neon/10 transition-colors"
+              className="ml-2 px-3 py-1.5 text-sm font-medium rounded-lg border border-brick/30 dark:border-brick-light/30 text-brick dark:text-brick-light hover:bg-brick/10 dark:hover:bg-brick-light/10 transition-colors"
               aria-label="Toggle language"
             >
               {language === 'en' ? 'PT' : 'EN'}
@@ -103,12 +116,22 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center space-x-3">
+          <div className="md:hidden flex items-center space-x-2">
+            {/* Mobile Theme Toggle */}
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleTheme}
+              className="p-1.5 text-brown dark:text-dark-text-secondary"
+              aria-label="Toggle theme"
+            >
+              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            </motion.button>
+
             {/* Mobile Language Toggle */}
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={toggleLanguage}
-              className="px-2.5 py-1 text-xs font-medium rounded-lg border border-accent-neon/30 text-accent-neon"
+              className="px-2.5 py-1 text-xs font-medium rounded-lg border border-brick/30 dark:border-brick-light/30 text-brick dark:text-brick-light"
               aria-label="Toggle language"
             >
               {language === 'en' ? 'PT' : 'EN'}
@@ -117,7 +140,7 @@ const Header = () => {
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-text-primary hover:text-accent-neon transition-colors"
+              className="p-2 text-brown-dark dark:text-dark-text hover:text-brick dark:hover:text-brick-light transition-colors"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -147,8 +170,8 @@ const Header = () => {
                       to={item.path}
                       className={`block px-4 py-3 rounded-lg transition-colors ${
                         isActive(item.path)
-                          ? 'bg-accent-neon/10 text-accent-neon'
-                          : 'text-text-secondary hover:bg-accent-neon/5 hover:text-text-primary'
+                          ? 'bg-brick/10 dark:bg-brick-light/10 text-brick dark:text-brick-light'
+                          : 'text-brown dark:text-dark-text-secondary hover:bg-beige dark:hover:bg-dark-surface hover:text-brown-dark dark:hover:text-dark-text'
                       }`}
                     >
                       {item.label}

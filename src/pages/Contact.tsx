@@ -85,9 +85,9 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-24 sm:pt-32 pb-16 sm:pb-24">
+    <div className="min-h-screen pt-24 sm:pt-32 pb-16 sm:pb-24 bg-cream dark:bg-dark-bg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+        {/* Header with Photo */}
         <motion.div
           ref={headerRef}
           initial={{ opacity: 0, y: 30 }}
@@ -96,14 +96,24 @@ const Contact = () => {
           className="text-center mb-16 sm:mb-24"
         >
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-gradient-to-br from-accent-neon/20 to-accent-blush/20 rounded-full">
-              <Mail size={40} className="text-accent-neon" />
-            </div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="relative"
+            >
+              <div className="absolute inset-0 bg-brick/20 dark:bg-brick-light/20 rounded-full blur-xl" />
+              <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-brick/30 dark:border-brick-light/30 shadow-editorial-lg">
+                <img
+                  src="/assets/profile-photo.png"
+                  alt="Barbara Araújo"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </motion.div>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-text-primary mb-6">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-brown-dark dark:text-dark-text mb-6">
             {t.contact.title}
           </h1>
-          <p className="text-text-secondary text-lg sm:text-xl max-w-3xl mx-auto">
+          <p className="text-brown dark:text-dark-text-secondary text-lg sm:text-xl max-w-3xl mx-auto">
             {t.contact.subtitle}
           </p>
         </motion.div>
@@ -118,7 +128,7 @@ const Contact = () => {
             className="space-y-8"
           >
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-6">
+              <h2 className="text-2xl sm:text-3xl font-bold text-brown-dark dark:text-dark-text mb-6">
                 Contact Information
               </h2>
 
@@ -130,21 +140,21 @@ const Contact = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="group bg-gradient-to-br from-accent-neon/5 to-accent-blush/5 rounded-card p-6 border border-accent-neon/20 hover:border-accent-neon/50 transition-all duration-300"
+                    className="group bg-beige dark:bg-dark-surface rounded-card p-6 border-2 border-brown/10 dark:border-dark-border hover:border-brick/30 dark:hover:border-brick-light/30 transition-all duration-300 hover:shadow-editorial-lg"
                   >
                     <div className="flex items-start gap-4">
-                      <div className="p-3 bg-accent-neon/10 rounded-lg text-accent-neon group-hover:bg-accent-neon group-hover:text-white transition-colors">
+                      <div className="p-3 bg-brick/10 dark:bg-brick-light/10 rounded-lg text-brick dark:text-brick-light group-hover:bg-brick dark:group-hover:bg-brick-light group-hover:text-white transition-colors">
                         <method.icon size={24} />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-text-secondary text-sm font-medium mb-1">
+                        <h3 className="text-brown dark:text-dark-text-secondary text-sm font-medium mb-1">
                           {method.label}
                         </h3>
-                        <p className="text-text-primary font-semibold">{method.value}</p>
+                        <p className="text-brown-dark dark:text-dark-text font-semibold">{method.value}</p>
                         {method.action && (
                           <button
                             onClick={method.action}
-                            className="mt-2 flex items-center gap-2 text-accent-neon hover:text-accent-blush transition-colors text-sm"
+                            className="mt-2 flex items-center gap-2 text-brick dark:text-brick-light hover:text-brick-light dark:hover:text-brick transition-colors text-sm"
                           >
                             {emailCopied ? <Check size={16} /> : <Copy size={16} />}
                             {method.actionLabel}
@@ -159,7 +169,7 @@ const Contact = () => {
 
             {/* Social Links */}
             <div>
-              <h3 className="text-xl font-bold text-text-primary mb-4">
+              <h3 className="text-xl font-bold text-brown-dark dark:text-dark-text mb-4">
                 {t.contact.info.socials}
               </h3>
               <div className="flex gap-4">
@@ -171,8 +181,7 @@ const Contact = () => {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1, y: -4 }}
                     whileTap={{ scale: 0.95 }}
-                    className="p-4 bg-gradient-to-br from-accent-neon/10 to-accent-blush/10 rounded-card border border-accent-neon/20 hover:border-accent-neon/50 hover:shadow-neon transition-all duration-300"
-                    style={{ color: social.color }}
+                    className="p-4 bg-beige dark:bg-dark-surface rounded-card border-2 border-brown/10 dark:border-dark-border hover:border-brick/30 dark:hover:border-brick-light/30 hover:shadow-editorial-lg transition-all duration-300 text-brown-dark dark:text-dark-text"
                   >
                     <social.icon size={28} />
                   </motion.a>
@@ -191,7 +200,7 @@ const Contact = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name Input */}
               <div>
-                <label htmlFor="name" className="block text-text-primary font-medium mb-2">
+                <label htmlFor="name" className="block text-brown-dark dark:text-dark-text font-medium mb-2">
                   {t.contact.form.name}
                 </label>
                 <input
@@ -201,14 +210,14 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-bg-primary border border-accent-neon/30 rounded-card text-text-primary placeholder-text-secondary focus:outline-none focus:border-accent-neon focus:shadow-neon transition-all duration-300"
+                  className="w-full px-4 py-3 bg-beige dark:bg-dark-surface border-2 border-brown/20 dark:border-dark-border rounded-card text-brown-dark dark:text-dark-text placeholder-brown/50 dark:placeholder-dark-text-secondary focus:outline-none focus:border-brick dark:focus:border-brick-light focus:shadow-editorial transition-all duration-300"
                   placeholder="Your name"
                 />
               </div>
 
               {/* Email Input */}
               <div>
-                <label htmlFor="email" className="block text-text-primary font-medium mb-2">
+                <label htmlFor="email" className="block text-brown-dark dark:text-dark-text font-medium mb-2">
                   {t.contact.form.email}
                 </label>
                 <input
@@ -218,14 +227,14 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-bg-primary border border-accent-neon/30 rounded-card text-text-primary placeholder-text-secondary focus:outline-none focus:border-accent-neon focus:shadow-neon transition-all duration-300"
+                  className="w-full px-4 py-3 bg-beige dark:bg-dark-surface border-2 border-brown/20 dark:border-dark-border rounded-card text-brown-dark dark:text-dark-text placeholder-brown/50 dark:placeholder-dark-text-secondary focus:outline-none focus:border-brick dark:focus:border-brick-light focus:shadow-editorial transition-all duration-300"
                   placeholder="your.email@example.com"
                 />
               </div>
 
               {/* Message Input */}
               <div>
-                <label htmlFor="message" className="block text-text-primary font-medium mb-2">
+                <label htmlFor="message" className="block text-brown-dark dark:text-dark-text font-medium mb-2">
                   {t.contact.form.message}
                 </label>
                 <textarea
@@ -235,7 +244,7 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   rows={6}
-                  className="w-full px-4 py-3 bg-bg-primary border border-accent-neon/30 rounded-card text-text-primary placeholder-text-secondary focus:outline-none focus:border-accent-neon focus:shadow-neon transition-all duration-300 resize-none"
+                  className="w-full px-4 py-3 bg-beige dark:bg-dark-surface border-2 border-brown/20 dark:border-dark-border rounded-card text-brown-dark dark:text-dark-text placeholder-brown/50 dark:placeholder-dark-text-secondary focus:outline-none focus:border-brick dark:focus:border-brick-light focus:shadow-editorial transition-all duration-300 resize-none"
                   placeholder="Tell me about your project or opportunity..."
                 />
               </div>
@@ -244,9 +253,9 @@ const Contact = () => {
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full px-8 py-4 bg-gradient-to-r from-accent-neon to-accent-blush text-white font-bold rounded-card hover:shadow-neon-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full px-8 py-4 bg-brick dark:bg-brick-light text-white font-bold rounded-card hover:shadow-editorial-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>

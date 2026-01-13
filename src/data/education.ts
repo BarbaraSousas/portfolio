@@ -19,29 +19,29 @@ export interface Education {
 
 export const education: Education[] = [
   {
-    id: 'iesb',
-    institution: 'IESB - Instituto de Educação Superior de Brasília',
+    id: 'software-engineering',
+    institution: 'Gran Faculdade',
     degree: {
-      en: 'Associate Degree',
-      pt: 'Tecnólogo',
+      en: 'Bachelor\'s Degree',
+      pt: 'Bacharelado',
     },
     field: {
-      en: 'Systems Analysis and Development',
-      pt: 'Análise e Desenvolvimento de Sistemas',
+      en: 'Software Engineering',
+      pt: 'Engenharia de Software',
     },
-    year: '2018',
+    year: '2025 - Present',
     description: {
-      en: 'Comprehensive program covering software development, database management, system architecture, and agile methodologies.',
-      pt: 'Programa abrangente cobrindo desenvolvimento de software, gerenciamento de banco de dados, arquitetura de sistemas e metodologias ágeis.',
+      en: 'Currently in the first semester. Focused on software development methodologies, algorithms, data structures, and engineering best practices.',
+      pt: 'Atualmente no primeiro semestre. Focado em metodologias de desenvolvimento de software, algoritmos, estruturas de dados e melhores práticas de engenharia.',
     },
-    logoColor: '#4F46E5',
+    logoColor: '#10B981',
   },
   {
     id: 'unip',
     institution: 'UNIP - Universidade Paulista',
     degree: {
-      en: 'Bachelor\'s Degree',
-      pt: 'Bacharelado',
+      en: 'Technical Course',
+      pt: 'Curso Técnico',
     },
     field: {
       en: 'Graphic Design',

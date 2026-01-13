@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Code2, ExternalLink, Github, X, Smartphone, ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects, Project } from '../data/projects';
@@ -59,7 +59,7 @@ const ImageCarousel = ({ images, projectTitle, isMobile }: { images: string[]; p
         )}
 
         {/* Image Counter */}
-        <div className="absolute top-4 right-4 px-3 py-1 bg-bg-primary/80 backdrop-blur-sm border border-accent-neon/30 text-text-primary rounded-full text-sm">
+        <div className="absolute top-4 right-4 px-3 py-1 bg-bg-primary/80 backdrop-blur-sm border border-accent-neon/30 text-text-primary rounded-full text-sm z-10">
           {currentIndex + 1} / {images.length}
         </div>
       </div>
@@ -92,6 +92,21 @@ const ImageCarousel = ({ images, projectTitle, isMobile }: { images: string[]; p
 
 const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => void }) => {
   const { language, t } = useLanguage();
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+
+    // Reset scroll to top when modal opens
+    if (contentRef.current) {
+      contentRef.current.scrollTop = 0;
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   return (
     <motion.div
@@ -99,42 +114,42 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
+      className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-2 sm:p-4"
     >
       <motion.div
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-bg-primary border border-accent-neon/30 rounded-card max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-neon-lg"
+        className="bg-gradient-to-br from-bg-primary via-bg-primary to-bg-primary/95 border-2 border-accent-neon/40 rounded-card max-w-4xl w-full max-h-[75vh] shadow-neon-lg flex flex-col overflow-hidden"
       >
-        {/* Header */}
-        <div className="sticky top-0 bg-bg-primary border-b border-accent-neon/20 p-6 flex items-start justify-between">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-2">
-              {project.title}
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-accent-neon/20 text-accent-neon rounded-full text-sm font-medium">
-                {project.type}
-              </span>
-              {project.featured && (
-                <span className="px-3 py-1 bg-gradient-to-r from-accent-neon to-accent-blush text-white rounded-full text-sm font-medium">
-                  {t.projects.tags.featured}
+          {/* Header */}
+          <div className="flex-shrink-0 bg-bg-primary/95 backdrop-blur-sm border-b-2 border-accent-neon/30 p-6 flex items-start justify-between">
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-2">
+                {project.title}
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 bg-accent-neon/20 text-accent-neon rounded-full text-sm font-medium">
+                  {project.type}
                 </span>
-              )}
+                {project.featured && (
+                  <span className="px-3 py-1 bg-gradient-to-r from-accent-neon to-accent-blush text-white rounded-full text-sm font-medium">
+                    {t.projects.tags.featured}
+                  </span>
+                )}
+              </div>
             </div>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-accent-neon/10 rounded-lg transition-colors"
+            >
+              <X size={24} className="text-text-secondary hover:text-accent-neon" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-accent-neon/10 rounded-lg transition-colors"
-          >
-            <X size={24} className="text-text-secondary hover:text-accent-neon" />
-          </button>
-        </div>
 
-        {/* Content */}
-        <div className="p-6 space-y-6">
+          {/* Content */}
+          <div ref={contentRef} className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Image Carousel */}
           {project.images.length > 0 && (
             <ImageCarousel
@@ -217,7 +232,7 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
               </a>
             )}
           </div>
-        </div>
+          </div>
       </motion.div>
     </motion.div>
   );
