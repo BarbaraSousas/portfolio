@@ -103,7 +103,7 @@ const Contact = () => {
               <div className="absolute inset-0 bg-brick/20 dark:bg-brick-light/20 rounded-full blur-xl" />
               <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-brick/30 dark:border-brick-light/30 shadow-editorial-lg">
                 <img
-                  src="/assets/profile-photo.png"
+                  src="/portfolio/assets/profile-photo.png"
                   alt="Barbara Araújo"
                   className="w-full h-full object-cover"
                 />

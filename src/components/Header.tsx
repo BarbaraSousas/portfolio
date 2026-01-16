@@ -31,10 +31,14 @@ const Header = () => {
     { path: '/experience', label: t.nav.experience },
     { path: '/education', label: t.nav.education },
     { path: '/projects', label: t.nav.projects },
+    { path: '/blog', label: t.nav.blog || 'Blog' },
     { path: '/contact', label: t.nav.contact },
   ];
 
   const isActive = (path: string) => {
+    if (path === '/blog') {
+      return location.pathname.startsWith('/blog');
+    }
     return location.pathname === path;
   };
 

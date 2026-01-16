@@ -9,6 +9,8 @@ import Experience from './pages/Experience';
 import Education from './pages/Education';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -70,6 +72,22 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <Contact />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/blog"
+          element={
+            <PageTransition>
+              <Blog />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/blog/:slug"
+          element={
+            <PageTransition>
+              <BlogPost />
             </PageTransition>
           }
         />

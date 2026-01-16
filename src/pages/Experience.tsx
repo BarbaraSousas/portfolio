@@ -1,6 +1,6 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { Briefcase, MapPin, Calendar } from 'lucide-react';
+import { useRef, useState, useEffect } from 'react';
+import { Briefcase, MapPin, Calendar, ChevronDown } from 'lucide-react';
 import { experiences } from '../data/experiences';
 import { useLanguage } from '../hooks/useLanguage';
 
@@ -8,47 +8,26 @@ const ExperienceCard = ({ experience, index }: { experience: typeof experiences[
   const { language } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
-  const isEven = index % 2 === 0;
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: isEven ? -30 : 30 }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{
-        duration: 0.7,
-        delay: index * 0.08,
+        duration: 0.6,
+        delay: index * 0.1,
         ease: [0.4, 0, 0.2, 1]
       }}
       style={{ willChange: 'transform, opacity' }}
-      className="relative"
+      className="h-full"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        {/* Timeline dot and line */}
-        <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={isInView ? { scale: 1 } : {}}
-            transition={{
-              duration: 0.5,
-              delay: index * 0.08 + 0.2,
-              ease: [0.34, 1.56, 0.64, 1]
-            }}
-            style={{ willChange: 'transform' }}
-            className="w-6 h-6 rounded-full bg-accent-neon shadow-neon-lg relative z-10"
-          >
-            <div className="absolute inset-0 rounded-full bg-accent-neon animate-ping opacity-60" />
-          </motion.div>
-        </div>
-
-        {/* Content */}
-        <div className={`${isEven ? 'lg:col-start-1' : 'lg:col-start-2'}`}>
-          <motion.div
-            whileHover={{ scale: 1.01, y: -3 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            style={{ willChange: 'transform' }}
-            className="group bg-gradient-to-br from-accent-neon/5 to-accent-blush/5 rounded-card p-6 sm:p-8 border border-accent-neon/20 hover:border-accent-neon/50 hover:shadow-neon transition-all duration-300"
-          >
+      <motion.div
+        whileHover={{ scale: 1.02, y: -4 }}
+        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+        style={{ willChange: 'transform' }}
+        className="group bg-gradient-to-br from-accent-neon/5 to-accent-blush/5 rounded-card p-6 sm:p-8 border border-accent-neon/20 hover:border-accent-neon/50 hover:shadow-neon transition-all duration-300 h-full flex flex-col"
+      >
             <div
               className="w-16 h-16 rounded-lg mb-4 flex items-center justify-center font-bold text-white text-xl"
               style={{ backgroundColor: experience.logoColor }}
@@ -98,11 +77,6 @@ const ExperienceCard = ({ experience, index }: { experience: typeof experiences[
               ))}
             </div>
           </motion.div>
-        </div>
-
-        {/* Empty space for alternating layout */}
-        {isEven ? <div className="hidden lg:block" /> : null}
-      </div>
     </motion.div>
   );
 };
@@ -111,6 +85,17 @@ const Experience = () => {
   const { t } = useLanguage();
   const headerRef = useRef(null);
   const isHeaderInView = useInView(headerRef, { once: true });
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY > 100;
+      setShowScrollIndicator(!scrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className="min-h-screen pt-24 sm:pt-32 pb-16 sm:pb-24">
@@ -136,18 +121,34 @@ const Experience = () => {
           </p>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical Line */}
-          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent-neon via-accent-blush to-accent-neon opacity-30" />
-
-          {/* Experience Cards */}
-          <div className="space-y-12 sm:space-y-16 lg:space-y-24">
-            {experiences.map((experience, index) => (
-              <ExperienceCard key={experience.id} experience={experience} index={index} />
-            ))}
-          </div>
+        {/* Experience Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+          {experiences.map((experience, index) => (
+            <ExperienceCard key={experience.id} experience={experience} index={index} />
+          ))}
         </div>
+
+        {/* Scroll Indicator */}
+        {showScrollIndicator && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 z-40"
+          >
+            <span className="text-sm font-medium text-accent-neon">Scroll para ver mais</span>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: 'easeInOut'
+              }}
+            >
+              <ChevronDown size={24} className="text-accent-neon" />
+            </motion.div>
+          </motion.div>
+        )}
       </div>
     </div>
   );
