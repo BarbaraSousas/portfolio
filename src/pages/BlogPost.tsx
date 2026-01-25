@@ -16,15 +16,12 @@ const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const { language, t } = useLanguage();
 
-  // Find the post by slug
   const post = posts.find((p) => p.slug === slug);
 
-  // If post not found, redirect to blog page
   if (!post) {
     return <Navigate to="/blog" replace />;
   }
 
-  // Find previous and next posts
   const currentIndex = posts.findIndex((p) => p.slug === slug);
   const previousPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
   const nextPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
