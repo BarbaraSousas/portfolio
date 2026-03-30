@@ -1,11 +1,22 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Sparkles, FolderOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
+import { useRef } from 'react';
 
 const Hero = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start']
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -29,11 +40,21 @@ const Hero = () => {
     },
   };
 
+  // Combinar stats do hero com highlights
+  const stats = [
+    { value: '8+', label: t.home.highlights.metrics[0].label },
+    { value: '25%', label: t.home.highlights.metrics[1].label },
+    { value: '40%', label: t.home.highlights.metrics[2].label },
+    { value: '15+', label: t.home.highlights.metrics[3].label },
+  ];
+
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 sm:px-6 lg:px-8 pt-20">
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30 dark:opacity-20">
-        {/* Decorative circles */}
+    <section ref={ref} className="h-screen flex items-center justify-center relative overflow-hidden px-4 sm:px-6 lg:px-8">
+      {/* Parallax Background Elements */}
+      <motion.div
+        style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '30%']) }}
+        className="absolute inset-0 overflow-hidden pointer-events-none opacity-30 dark:opacity-20"
+      >
         <motion.div
           animate={{ y: [0, 20, 0], rotate: [0, 5, 0] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -44,14 +65,25 @@ const Hero = () => {
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           className="absolute bottom-1/3 left-1/4 w-24 h-24 rounded-full border-2 border-brown/20 dark:border-brown-light/20"
         />
-      </div>
+        <motion.div
+          style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '60%']) }}
+          className="absolute top-1/3 left-[15%] w-16 h-16 rounded-full bg-brick/10 dark:bg-brick-light/10"
+        />
+        <motion.div
+          style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '80%']) }}
+          className="absolute bottom-1/4 right-[15%] w-20 h-20 rounded-full bg-brown/10 dark:bg-brown-light/10"
+        />
+      </motion.div>
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <motion.div
+        style={{ y, opacity, scale }}
+        className="max-w-6xl mx-auto relative z-10 w-full"
+      >
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="text-center space-y-6 sm:space-y-8"
+          className="text-center space-y-4 sm:space-y-6"
         >
           {/* Top Label with Icon */}
           <motion.div
@@ -64,90 +96,63 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Large Title - Editorial Style */}
+          {/* Large Title */}
           <motion.h1
             variants={itemVariants}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black text-brown-dark dark:text-dark-text leading-none tracking-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black text-brown-dark dark:text-dark-text leading-none tracking-tight"
           >
             {t.hero.name}
           </motion.h1>
 
-          {/* Subtitle with Decorative Elements */}
+          {/* Subtitle */}
           <motion.div
             variants={itemVariants}
             className="relative inline-block"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif italic text-gradient mb-2">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-serif italic text-gradient mb-2">
               {t.hero.title}
             </h2>
-            <motion.svg
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1.5, delay: 0.8 }}
-              className="absolute -bottom-2 left-0 w-full h-3"
-              viewBox="0 0 200 10"
-              preserveAspectRatio="none"
-            >
-              <motion.path
-                d="M0,5 Q50,0 100,5 T200,5"
-                stroke="currentColor"
-                strokeWidth="2"
-                fill="none"
-                className="text-brick dark:text-brick-light opacity-50"
-              />
-            </motion.svg>
           </motion.div>
 
           {/* Description */}
           <motion.p
             variants={itemVariants}
-            className="text-base sm:text-lg md:text-xl text-brown dark:text-dark-text-secondary leading-relaxed max-w-3xl mx-auto px-4"
+            className="text-sm sm:text-base md:text-lg text-brown dark:text-dark-text-secondary leading-relaxed max-w-2xl mx-auto px-4"
           >
             {t.hero.description}
           </motion.p>
 
-          {/* Stats Row - Editorial Style */}
+          {/* Stats Grid - Impact & Achievements integrados */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 pt-8 sm:pt-12"
+            className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-6 max-w-3xl mx-auto"
           >
-            <div className="relative">
-              <div className="absolute -inset-4 border-2 border-dashed border-brown/20 dark:border-dark-border rounded-lg" />
-              <div className="relative text-center p-4">
-                <div className="text-4xl sm:text-5xl font-bold text-gradient mb-1">8+</div>
-                <div className="text-xs sm:text-sm text-brown dark:text-dark-text-secondary uppercase tracking-wider">Years Exp.</div>
-              </div>
-            </div>
-
-            <div className="relative">
-              <div className="absolute -inset-4 border-2 border-dashed border-brown/20 dark:border-dark-border rounded-lg" />
-              <div className="relative text-center p-4">
-                <div className="text-4xl sm:text-5xl font-bold text-gradient mb-1">15+</div>
-                <div className="text-xs sm:text-sm text-brown dark:text-dark-text-secondary uppercase tracking-wider">Projects</div>
-              </div>
-            </div>
-
-            <div className="relative">
-              <div className="absolute -inset-4 border-2 border-dashed border-brown/20 dark:border-dark-border rounded-lg" />
-              <div className="relative text-center p-4">
-                <div className="text-4xl sm:text-5xl font-bold text-gradient mb-1">7</div>
-                <div className="text-xs sm:text-sm text-brown dark:text-dark-text-secondary uppercase tracking-wider">Companies</div>
-              </div>
-            </div>
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ scale: 1.05, y: -4 }}
+                className="relative p-3 sm:p-4 bg-beige/50 dark:bg-dark-surface/50 rounded-card border border-brown/10 dark:border-dark-border"
+              >
+                <div className="text-2xl sm:text-3xl font-bold text-gradient mb-1">{stat.value}</div>
+                <div className="text-[10px] sm:text-xs text-brown dark:text-dark-text-secondary uppercase tracking-wider leading-tight">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
 
           {/* CTA Buttons */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8"
+            className="flex flex-col sm:flex-row gap-3 justify-center items-center pt-4"
           >
             <motion.button
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate('/projects')}
-              className="group px-8 py-4 bg-brick dark:bg-brick-light text-white font-semibold rounded-card hover:shadow-editorial-lg transition-all duration-300 flex items-center gap-2"
+              className="group px-6 py-3 bg-brick dark:bg-brick-light text-white font-semibold rounded-card hover:shadow-editorial-lg transition-all duration-300 flex items-center gap-2"
             >
-              <FolderOpen size={20} />
+              <FolderOpen size={18} />
               {t.hero.cta.projects}
             </motion.button>
 
@@ -155,13 +160,30 @@ const Hero = () => {
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate('/contact')}
-              className="px-8 py-4 border-2 border-brick dark:border-brick-light text-brick dark:text-brick-light font-semibold rounded-card hover:bg-brick/10 dark:hover:bg-brick-light/10 transition-all duration-300"
+              className="px-6 py-3 border-2 border-brick dark:border-brick-light text-brick dark:text-brick-light font-semibold rounded-card hover:bg-brick/10 dark:hover:bg-brick-light/10 transition-all duration-300"
             >
               {t.hero.cta.contact}
             </motion.button>
           </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+        style={{ opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]) }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2"
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="w-5 h-8 border-2 border-brown/30 dark:border-dark-border rounded-full flex justify-center pt-1.5"
+        >
+          <motion.div className="w-1 h-1 bg-brick dark:bg-brick-light rounded-full" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

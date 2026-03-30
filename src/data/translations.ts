@@ -22,6 +22,37 @@ export const translations = {
         contact: 'Get in Touch',
       },
     },
+    // About Section
+    about: {
+      title: 'Who is',
+      titleHighlight: 'SHE',
+      aboutMe: 'About me',
+      bio1: 'Full-stack developer with passion for creating elegant solutions',
+      bio2: 'Powered by coffee and curiosity',
+      quote: '"Clean code always looks like it was written by someone who cares."',
+      quoteAuthor: '— Robert C. Martin, Clean Code',
+      currentFocus: 'Current Focus',
+      focus1: 'Building scalable web applications',
+      focus2: 'Exploring modern frontend architectures',
+      focus3: 'Learning and sharing knowledge',
+      specialist: 'Specialist',
+      expert: 'Expert',
+    },
+    // Writing Section
+    writing: {
+      title: 'Writing & Sharing',
+      subtitle: 'Thoughts, tutorials, and learnings about development and technology',
+      tutorials: 'Tutorials',
+      tutorialsDesc: 'Step-by-step guides and how-tos',
+      caseStudies: 'Case Studies',
+      caseStudiesDesc: 'Deep dives into projects',
+      thoughts: 'Thoughts',
+      thoughtsDesc: 'Reflections on tech and career',
+      til: 'TIL',
+      tilDesc: 'Quick notes and snippets',
+      comingSoon: 'Coming Soon',
+      comingSoonDesc: 'Blog posts and articles are on their way. Stay tuned!',
+    },
     // Home Page Sections
     home: {
       techStack: {
@@ -155,7 +186,7 @@ export const translations = {
   pt: {
     // Navegação
     nav: {
-      home: 'Início',
+      home: 'Home',
       experience: 'Experiência',
       education: 'Formação',
       projects: 'Projetos',
@@ -173,16 +204,47 @@ export const translations = {
         contact: 'Entre em Contato',
       },
     },
+    // Seção About
+    about: {
+      title: 'Quem é',
+      titleHighlight: 'ELA',
+      aboutMe: 'Sobre mim',
+      bio1: 'Desenvolvedora full-stack com paixão por criar soluções elegantes',
+      bio2: 'Movida a café e curiosidade',
+      quote: '"Código limpo sempre parece ter sido escrito por alguém que se importa."',
+      quoteAuthor: '— Robert C. Martin, Clean Code',
+      currentFocus: 'Foco Atual',
+      focus1: 'Construindo aplicações web escaláveis',
+      focus2: 'Explorando arquiteturas frontend modernas',
+      focus3: 'Aprendendo e compartilhando conhecimento',
+      specialist: 'Especialista',
+      expert: 'Expert',
+    },
+    // Seção de Escrita
+    writing: {
+      title: 'Escrita & Compartilhamento',
+      subtitle: 'Pensamentos, tutoriais e aprendizados sobre desenvolvimento e tecnologia',
+      tutorials: 'Tutoriais',
+      tutorialsDesc: 'Guias passo a passo e how-tos',
+      caseStudies: 'Case Studies',
+      caseStudiesDesc: 'Análises profundas de projetos',
+      thoughts: 'Pensamentos',
+      thoughtsDesc: 'Reflexões sobre tech e carreira',
+      til: 'TIL',
+      tilDesc: 'Notas rápidas e snippets',
+      comingSoon: 'Em Breve',
+      comingSoonDesc: 'Posts e artigos estão a caminho. Fique ligado!',
+    },
     // Seções da Página Inicial
     home: {
       techStack: {
-        title: 'Stack Tecnológica',
+        title: 'Tech Stack',
         subtitle: 'Tecnologias que uso diariamente',
         categories: {
           frontend: 'Frontend',
           backend: 'Backend',
           mobile: 'Mobile',
-          testing: 'Testes & Ferramentas',
+          testing: 'Testing & Tools',
         },
       },
       highlights: {
