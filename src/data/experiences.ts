@@ -6,7 +6,10 @@ export interface Experience {
     pt: string;
   };
   period: string;
-  location: string;
+  location: {
+    en: string;
+    pt: string;
+  };
   description: {
     en: string[];
     pt: string[];
@@ -17,24 +20,48 @@ export interface Experience {
 
 export const experiences: Experience[] = [
   {
+    id: 'cloz',
+    company: 'CloZ',
+    role: {
+      en: 'Senior Full-Stack Engineer',
+      pt: 'Engenheira Full-Stack Sênior',
+    },
+    period: '2026 - Present',
+    location: { en: 'Remote, Paris', pt: 'Remoto, Paris' },
+    description: {
+      en: [
+        'Built and operate an LLM pipeline with LangGraph that turns product catalog data into generated looks used by real e-commerce customers, with structured outputs and vector search on pgvector',
+        'Own the system end to end, from design and deployment to monitoring: asynchronous processing with BullMQ, AWS infrastructure provisioned with Terraform, CloudWatch for production visibility',
+        'Work directly with the founders to decide where AI adds value and where simpler deterministic code is the better choice',
+      ],
+      pt: [
+        'Construí e opero um pipeline de LLM com LangGraph que transforma dados de catálogo em looks gerados, usados por clientes reais de e-commerce, com saídas estruturadas e busca vetorial em pgvector',
+        'Sou dona do sistema de ponta a ponta, do design e deploy ao monitoramento: processamento assíncrono com BullMQ, infraestrutura AWS provisionada com Terraform, CloudWatch para visibilidade em produção',
+        'Trabalho direto com os founders para decidir onde a IA agrega valor e onde código determinístico simples é a melhor escolha',
+      ],
+    },
+    technologies: ['Python', 'LangGraph', 'TypeScript', 'NestJS', 'PostgreSQL', 'pgvector', 'BullMQ', 'AWS', 'Terraform'],
+    logoColor: '#BE3E2B',
+  },
+  {
     id: 'multiledgers',
     company: 'Multiledgers',
     role: {
       en: 'Senior Full-Stack Software Engineer',
       pt: 'Engenheira de Software Full-Stack Sênior',
     },
-    period: '2025 - Present',
-    location: 'Remote',
+    period: '2025',
+    location: { en: 'Remote', pt: 'Remoto' },
     description: {
       en: [
-        'Leading frontend architecture and development for enterprise fintech solutions',
-        'Implementing scalable React applications with TypeScript and modern state management',
-        'Collaborating with cross-functional teams to deliver high-quality financial products',
+        'Turned inconsistent, delayed and partial data from external services into reliable structured records for certification workflows where incorrect data had legal consequences',
+        'Implemented distributed locking in PostgreSQL to guarantee consistency across services',
+        'Built high-volume data screens with server-side pagination for millions of daily operations',
       ],
       pt: [
-        'Liderando arquitetura e desenvolvimento frontend para soluções empresariais de fintech',
-        'Implementando aplicações React escaláveis com TypeScript e gerenciamento de estado moderno',
-        'Colaborando com equipes multifuncionais para entregar produtos financeiros de alta qualidade',
+        'Transformei dados inconsistentes, atrasados e parciais de serviços externos em registros estruturados confiáveis para fluxos de certificação onde dado incorreto tinha consequência legal',
+        'Implementei locks distribuídos no PostgreSQL para garantir consistência entre serviços',
+        'Construí telas de alto volume com paginação server-side para milhões de operações diárias',
       ],
     },
     technologies: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'AWS'],
@@ -48,7 +75,7 @@ export const experiences: Experience[] = [
       pt: 'Engenheira de Software Sênior',
     },
     period: '2023 - 2024',
-    location: 'Brasília, Brazil',
+    location: { en: 'Brasília, Brazil', pt: 'Brasília, Brasil' },
     description: {
       en: [
         'Developed and maintained high-traffic news platform serving millions of users',
@@ -74,7 +101,7 @@ export const experiences: Experience[] = [
       pt: 'Engenheira de Software Full-Stack',
     },
     period: '2022 - 2023',
-    location: 'Remote',
+    location: { en: 'Remote', pt: 'Remoto' },
     description: {
       en: [
         'Developed full-stack solutions for international clients across multiple industries',
@@ -100,7 +127,7 @@ export const experiences: Experience[] = [
       pt: 'Engenheira de Software Full-Stack',
     },
     period: '2021 - 2023',
-    location: 'Brasília, Brazil',
+    location: { en: 'Brasília, Brazil', pt: 'Brasília, Brasil' },
     description: {
       en: [
         'Developed enterprise applications for major Brazilian corporations',
@@ -126,7 +153,7 @@ export const experiences: Experience[] = [
       pt: 'Desenvolvedora Frontend',
     },
     period: '2021',
-    location: 'Brasília, Brazil',
+    location: { en: 'Brasília, Brazil', pt: 'Brasília, Brasil' },
     description: {
       en: [
         'Developed educational platform interfaces using React and modern JavaScript',
@@ -152,7 +179,7 @@ export const experiences: Experience[] = [
       pt: 'Desenvolvedora Frontend',
     },
     period: '2019 - 2021',
-    location: 'Brasília, Brazil',
+    location: { en: 'Brasília, Brazil', pt: 'Brasília, Brasil' },
     description: {
       en: [
         'Built and maintained web applications for cooperative financial systems',
@@ -178,7 +205,7 @@ export const experiences: Experience[] = [
       pt: 'Desenvolvedora Frontend Júnior',
     },
     period: '2018 - 2019',
-    location: 'Brasília, Brazil',
+    location: { en: 'Brasília, Brazil', pt: 'Brasília, Brasil' },
     description: {
       en: [
         'Started professional career developing web interfaces for digital products',

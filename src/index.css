@@ -1,26 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Light mode - earthy/neutral */
-  --cream: #FAF7F0;
-  --beige: #F5F1E8;
-  --brown-light: #D4C4B0;
-  --brown: #8B7355;
-  --brown-dark: #5C4E3F;
-  --brick: #C1554D;
-  --brick-light: #D67C75;
+  /* Notebook paper: dot grid color for the page background */
+  --grid: #D5DAD2;
 }
 
 .dark {
-  --bg-primary: #2A2520;
-  --bg-secondary: #3D3935;
-  --border-color: #564F4A;
-  --text-primary: #E8E3DC;
-  --text-secondary: #B8AFA5;
+  --grid: #232A33;
 }
 
 * {
@@ -36,10 +24,12 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   @apply bg-cream text-brown-dark dark:bg-dark-bg dark:text-dark-text;
+  background-image: radial-gradient(var(--grid) 1px, transparent 1.2px);
+  background-size: 22px 22px;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
   /* Enable hardware acceleration */
@@ -48,7 +38,10 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Sora', sans-serif;
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
 }
 
 /* Custom scrollbar */
@@ -80,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Utility classes */
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-brick to-brown bg-clip-text text-transparent;
+    @apply text-brick dark:text-brick-light;
   }
 
   .hover-lift {
