@@ -1,18 +1,18 @@
-import { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Mail, MapPin, Linkedin, Github, Copy, Check, Send } from 'lucide-react';
+import { useState } from 'react';
+import NotebookEntry, { MarginLabel, MarginNote } from '../components/notebook/NotebookEntry';
+import { pageShell, rule, inkRule, muted, penText, monoLabel } from '../components/notebook/styles';
 import { useLanguage } from '../hooks/useLanguage';
 import { contactInfo, FORMSPREE_ENDPOINT } from '../data/contact';
 
+// Inputs written on the notebook lines: no box, only a rule underneath.
+const field = `w-full bg-transparent border-0 border-b ${rule} px-0 py-2.5 text-brown-dark dark:text-dark-text placeholder:text-brown/60 dark:placeholder:text-dark-text-secondary/60 focus:outline-none focus:border-brick dark:focus:border-brick-light transition-colors`;
+
 const Contact = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [emailCopied, setEmailCopied] = useState(false);
-
-  const headerRef = useRef(null);
-  const isHeaderInView = useInView(headerRef, { once: true });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,251 +49,124 @@ const Contact = () => {
   };
 
   const copyEmail = () => {
-    navigator.clipboard.writeText(contactInfo.email);
-    setEmailCopied(true);
-    setTimeout(() => setEmailCopied(false), 2000);
+    navigator.clipboard.writeText(contactInfo.email).then(() => {
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    });
   };
 
-  const contactMethods = [
-    {
-      icon: Mail,
-      label: t.contact.info.email,
-      value: contactInfo.email,
-      action: copyEmail,
-      actionLabel: emailCopied ? t.contact.emailCopied : t.contact.copyEmail,
-    },
-    {
-      icon: MapPin,
-      label: t.contact.info.location,
-      value: t.contact.info.locationValue,
-    },
-  ];
-
-  const socialLinks = [
-    {
-      name: 'LinkedIn',
-      url: contactInfo.socials.linkedin,
-      icon: Linkedin,
-      color: '#0A66C2',
-    },
-    {
-      name: 'GitHub',
-      url: contactInfo.socials.github,
-      icon: Github,
-      color: '#FFFFFF',
-    },
+  const details = [
+    { label: t.contact.info.email, value: contactInfo.email },
+    { label: t.contact.info.location, value: t.contact.info.locationValue },
+    { label: 'LinkedIn', value: contactInfo.socials.linkedin.replace('https://', ''), href: contactInfo.socials.linkedin },
+    { label: 'GitHub', value: contactInfo.socials.github.replace('https://', ''), href: contactInfo.socials.github },
   ];
 
   return (
-    <div className="min-h-screen pt-24 sm:pt-32 pb-16 sm:pb-24 bg-cream dark:bg-dark-bg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header with Photo */}
-        <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16 sm:mb-24"
-        >
-          <div className="flex justify-center mb-6">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="relative"
-            >
-              <div className="absolute inset-0 bg-brick/20 dark:bg-brick-light/20 rounded-full blur-xl" />
-              <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-brick/30 dark:border-brick-light/30 shadow-editorial-lg">
-                <img
-                  src="/portfolio/assets/profile-photo.png"
-                  alt="Barbara Araújo"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </motion.div>
+    <div className={pageShell}>
+      <NotebookEntry
+        margin={
+          <>
+            <MarginLabel>{language === 'pt' ? 'última página' : 'last page'}</MarginLabel>
+            <span>{t.nav.contact.toLowerCase()}</span>
+            {/* Photo taped into the margin */}
+            <figure className="hidden md:block relative w-[118px] mt-4 -rotate-2 bg-beige dark:bg-dark-surface p-1.5 pb-6 shadow-soft">
+              <span
+                aria-hidden="true"
+                className="absolute -top-2.5 left-1/2 -translate-x-1/2 rotate-3 w-14 h-5 bg-brown-light/60 dark:bg-dark-border/80"
+              />
+              <img src="/portfolio/assets/profile-photo.png" alt="Barbara Sousa" className="w-full aspect-square object-cover" />
+              <figcaption className="absolute bottom-1 left-0 right-0 text-center text-[10px] text-brown dark:text-dark-text-secondary">
+                Brasília
+              </figcaption>
+            </figure>
+          </>
+        }
+      >
+        <div className="flex items-start gap-5">
+          <img
+            src="/portfolio/assets/profile-photo.png"
+            alt=""
+            className={`md:hidden w-16 h-16 object-cover border ${rule} -rotate-2`}
+          />
+          <div>
+            <h1 className="font-display text-[clamp(36px,5.4vw,60px)] leading-[1.05] tracking-[-0.025em] max-w-[16ch]">
+              {t.contact.title}
+            </h1>
+            <p className={`text-lg ${muted} max-w-[58ch] mt-5`}>{t.contact.subtitle}</p>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-brown-dark dark:text-dark-text mb-6">
-            {t.contact.title}
-          </h1>
-          <p className="text-brown dark:text-dark-text-secondary text-lg sm:text-xl max-w-3xl mx-auto">
-            {t.contact.subtitle}
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-8"
-          >
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-brown-dark dark:text-dark-text mb-6">
-                Contact Information
-              </h2>
-
-              <div className="space-y-6">
-                {contactMethods.map((method, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="group bg-beige dark:bg-dark-surface rounded-card p-6 border-2 border-brown/10 dark:border-dark-border hover:border-brick/30 dark:hover:border-brick-light/30 transition-all duration-300 hover:shadow-editorial-lg"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="p-3 bg-brick/10 dark:bg-brick-light/10 rounded-lg text-brick dark:text-brick-light group-hover:bg-brick dark:group-hover:bg-brick-light group-hover:text-white transition-colors">
-                        <method.icon size={24} />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-brown dark:text-dark-text-secondary text-sm font-medium mb-1">
-                          {method.label}
-                        </h3>
-                        <p className="text-brown-dark dark:text-dark-text font-semibold">{method.value}</p>
-                        {method.action && (
-                          <button
-                            onClick={method.action}
-                            className="mt-2 flex items-center gap-2 text-brick dark:text-brick-light hover:text-brick-light dark:hover:text-brick transition-colors text-sm"
-                          >
-                            {emailCopied ? <Check size={16} /> : <Copy size={16} />}
-                            {method.actionLabel}
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div>
-              <h3 className="text-xl font-bold text-brown-dark dark:text-dark-text mb-4">
-                {t.contact.info.socials}
-              </h3>
-              <div className="flex gap-4">
-                {socialLinks.map((social) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1, y: -4 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="p-4 bg-beige dark:bg-dark-surface rounded-card border-2 border-brown/10 dark:border-dark-border hover:border-brick/30 dark:hover:border-brick-light/30 hover:shadow-editorial-lg transition-all duration-300 text-brown-dark dark:text-dark-text"
-                  >
-                    <social.icon size={28} />
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Name Input */}
-              <div>
-                <label htmlFor="name" className="block text-brown-dark dark:text-dark-text font-medium mb-2">
-                  {t.contact.form.name}
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-beige dark:bg-dark-surface border-2 border-brown/20 dark:border-dark-border rounded-card text-brown-dark dark:text-dark-text placeholder-brown/50 dark:placeholder-dark-text-secondary focus:outline-none focus:border-brick dark:focus:border-brick-light focus:shadow-editorial transition-all duration-300"
-                  placeholder="Your name"
-                />
-              </div>
-
-              {/* Email Input */}
-              <div>
-                <label htmlFor="email" className="block text-brown-dark dark:text-dark-text font-medium mb-2">
-                  {t.contact.form.email}
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-beige dark:bg-dark-surface border-2 border-brown/20 dark:border-dark-border rounded-card text-brown-dark dark:text-dark-text placeholder-brown/50 dark:placeholder-dark-text-secondary focus:outline-none focus:border-brick dark:focus:border-brick-light focus:shadow-editorial transition-all duration-300"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-
-              {/* Message Input */}
-              <div>
-                <label htmlFor="message" className="block text-brown-dark dark:text-dark-text font-medium mb-2">
-                  {t.contact.form.message}
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={6}
-                  className="w-full px-4 py-3 bg-beige dark:bg-dark-surface border-2 border-brown/20 dark:border-dark-border rounded-card text-brown-dark dark:text-dark-text placeholder-brown/50 dark:placeholder-dark-text-secondary focus:outline-none focus:border-brick dark:focus:border-brick-light focus:shadow-editorial transition-all duration-300 resize-none"
-                  placeholder="Tell me about your project or opportunity..."
-                />
-              </div>
-
-              {/* Submit Button */}
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full px-8 py-4 bg-brick dark:bg-brick-light text-white font-bold rounded-card hover:shadow-editorial-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    {t.contact.form.sending}
-                  </>
-                ) : (
-                  <>
-                    <Send size={20} />
-                    {t.contact.form.send}
-                  </>
-                )}
-              </motion.button>
-
-              {/* Status Messages */}
-              {submitStatus === 'success' && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-green-500/10 border border-green-500/30 rounded-card text-green-500 text-center"
-                >
-                  {t.contact.form.success}
-                </motion.div>
-              )}
-
-              {submitStatus === 'error' && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-red-500/10 border border-red-500/30 rounded-card text-red-500 text-center"
-                >
-                  {t.contact.form.error}
-                </motion.div>
-              )}
-            </form>
-          </motion.div>
         </div>
-      </div>
+      </NotebookEntry>
+
+      <NotebookEntry
+        margin={
+          <>
+            <MarginLabel>{language === 'pt' ? 'onde me achar' : 'where to find me'}</MarginLabel>
+            <MarginNote>{language === 'pt' ? '↳ aberta a vagas\nremotas' : '↳ open to remote\nroles'}</MarginNote>
+          </>
+        }
+      >
+        <dl className={`border-t ${inkRule}`}>
+          {details.map((d) => (
+            <div key={d.label} className={`grid grid-cols-1 sm:grid-cols-[140px_minmax(0,1fr)_auto] gap-x-4 gap-y-0.5 items-baseline py-3 border-b ${rule}`}>
+              <dt className={`${monoLabel} ${muted}`}>{d.label}</dt>
+              <dd className="font-mono text-sm break-all">
+                {d.href ? (
+                  <a href={d.href} target="_blank" rel="noopener noreferrer" className="underline decoration-brick underline-offset-4">
+                    {d.value}
+                  </a>
+                ) : (
+                  d.value
+                )}
+              </dd>
+              {d.value === contactInfo.email && (
+                <button type="button" onClick={copyEmail} className={`justify-self-start font-mono text-xs ${penText} hover:underline underline-offset-4`}>
+                  {emailCopied ? t.contact.emailCopied : t.contact.copyEmail}
+                </button>
+              )}
+            </div>
+          ))}
+        </dl>
+      </NotebookEntry>
+
+      <NotebookEntry margin={<MarginLabel>{language === 'pt' ? 'deixe um recado' : 'leave a note'}</MarginLabel>}>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6 max-w-[620px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <label className="block">
+              <span className={`${monoLabel} ${muted}`}>{t.contact.form.name}</span>
+              <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className={field} />
+            </label>
+            <label className="block">
+              <span className={`${monoLabel} ${muted}`}>{t.contact.form.email}</span>
+              <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className={field} />
+            </label>
+          </div>
+          <label className="block">
+            <span className={`${monoLabel} ${muted}`}>{t.contact.form.message}</span>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+              rows={6}
+              className={`${field} resize-none leading-[2.2rem] bg-[linear-gradient(transparent_calc(2.2rem-1px),theme(colors.brown-light)_calc(2.2rem-1px))] dark:bg-[linear-gradient(transparent_calc(2.2rem-1px),theme(colors.dark-border)_calc(2.2rem-1px))] bg-[length:100%_2.2rem] py-0`}
+            />
+          </label>
+
+          <div className="flex flex-wrap items-center gap-5">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="px-6 py-3 bg-brick dark:bg-brick-light text-cream dark:text-dark-bg font-mono text-sm hover:bg-brown-dark dark:hover:bg-dark-text transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? t.contact.form.sending : `${t.contact.form.send} →`}
+            </button>
+            {submitStatus === 'success' && <p className="font-mono text-sm text-ok dark:text-ok-light" role="status">{t.contact.form.success}</p>}
+            {submitStatus === 'error' && <p className={`font-mono text-sm ${penText}`} role="alert">{t.contact.form.error}</p>}
+          </div>
+        </form>
+      </NotebookEntry>
     </div>
   );
 };

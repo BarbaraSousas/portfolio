@@ -8,29 +8,36 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Light mode - earthy/neutral tones
-        cream: '#FAF7F0',
-        beige: '#F5F1E8',
-        'brown-light': '#D4C4B0',
-        brown: '#8B7355',
-        'brown-dark': '#5C4E3F',
-        brick: '#C1554D',
-        'brick-light': '#D67C75',
+        // Light mode - notebook paper and ink (names kept so every page picks up the palette)
+        cream: '#F1F2ED',
+        beige: '#F8F8F4',
+        'brown-light': '#C9CFC6',
+        brown: '#566070',
+        'brown-dark': '#1C2330',
+        brick: '#BE3E2B',
+        'brick-light': '#E2725F',
 
-        // Dark mode - earthy dark tones
-        'dark-bg': '#2A2520',
-        'dark-surface': '#3D3935',
-        'dark-border': '#564F4A',
-        'dark-text': '#E8E3DC',
-        'dark-text-secondary': '#B8AFA5',
+        // Dark mode - ink page
+        'dark-bg': '#13171D',
+        'dark-surface': '#191E25',
+        'dark-border': '#2E3640',
+        'dark-text': '#E3E5DF',
+        'dark-text-secondary': '#9AA3AE',
+
+        // Verdict colors for the model / code / human lanes
+        hold: '#A6720F',
+        'hold-light': '#D9A747',
+        ok: '#3B7650',
+        'ok-light': '#7DBB8F',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Sora', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        sans: ['"Instrument Sans"', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+        display: ['Newsreader', 'Georgia', 'serif'],
+        serif: ['Newsreader', 'Georgia', 'serif'],
+        mono: ['"IBM Plex Mono"', 'ui-monospace', 'Menlo', 'monospace'],
       },
       borderRadius: {
-        'card': '12px',
+        'card': '2px',
       },
       boxShadow: {
         'soft': '0 2px 10px rgba(0, 0, 0, 0.05)',

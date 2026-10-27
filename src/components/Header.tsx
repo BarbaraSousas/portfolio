@@ -53,20 +53,17 @@ const Header = () => {
       transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-cream/95 dark:bg-dark-bg/95 backdrop-blur-md shadow-soft-lg'
-          : 'bg-transparent'
+          ? 'bg-cream/95 dark:bg-dark-bg/95 backdrop-blur-md border-b border-brown-light dark:border-dark-border'
+          : 'bg-transparent border-b border-transparent'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="max-w-[1040px] mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              className="text-xl sm:text-2xl font-display font-bold text-gradient"
-            >
-              BA
-            </motion.span>
+            <span className="font-display font-medium text-xl tracking-[-0.01em] text-brown-dark dark:text-dark-text">
+              barbara <i className="italic text-brick dark:text-brick-light">sousa</i>
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -75,7 +72,7 @@ const Header = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className="relative px-3 lg:px-4 py-2 text-sm lg:text-base transition-colors group"
+                className="relative px-2.5 lg:px-3 py-2 font-mono text-[13px] lowercase transition-colors group"
               >
                 <span
                   className={`${
@@ -112,7 +109,7 @@ const Header = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={toggleLanguage}
-              className="ml-2 px-3 py-1.5 text-sm font-medium rounded-lg border border-brick/30 dark:border-brick-light/30 text-brick dark:text-brick-light hover:bg-brick/10 dark:hover:bg-brick-light/10 transition-colors"
+              className="ml-2 px-2.5 py-1 font-mono text-xs border border-brick/30 dark:border-brick-light/30 text-brick dark:text-brick-light hover:bg-brick/10 dark:hover:bg-brick-light/10 transition-colors"
               aria-label="Toggle language"
             >
               {language === 'en' ? 'PT' : 'EN'}
@@ -135,7 +132,7 @@ const Header = () => {
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={toggleLanguage}
-              className="px-2.5 py-1 text-xs font-medium rounded-lg border border-brick/30 dark:border-brick-light/30 text-brick dark:text-brick-light"
+              className="px-2.5 py-1 font-mono text-xs border border-brick/30 dark:border-brick-light/30 text-brick dark:text-brick-light"
               aria-label="Toggle language"
             >
               {language === 'en' ? 'PT' : 'EN'}
@@ -172,7 +169,7 @@ const Header = () => {
                   >
                     <Link
                       to={item.path}
-                      className={`block px-4 py-3 rounded-lg transition-colors ${
+                      className={`block px-4 py-3 font-mono text-sm lowercase transition-colors ${
                         isActive(item.path)
                           ? 'bg-brick/10 dark:bg-brick-light/10 text-brick dark:text-brick-light'
                           : 'text-brown dark:text-dark-text-secondary hover:bg-beige dark:hover:bg-dark-surface hover:text-brown-dark dark:hover:text-dark-text'

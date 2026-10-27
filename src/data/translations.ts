@@ -8,7 +8,7 @@ export const translations = {
       experience: 'Experience',
       education: 'Education',
       projects: 'Projects',
-      blog: 'Blog',
+      blog: 'Notes',
       contact: 'Contact',
     },
     // Hero Section
@@ -93,19 +93,19 @@ export const translations = {
     },
     // Experience Page
     experience: {
-      title: 'Professional Experience',
-      subtitle: 'Building impactful solutions across diverse industries',
+      title: 'Where I have worked',
+      subtitle: 'Eight years of production software, from government systems and retail checkout to an LLM pipeline.',
       present: 'Present',
     },
     // Education Page
     education: {
-      title: 'Education & Learning',
-      subtitle: 'Continuous learning and formal education',
+      title: 'Education',
+      subtitle: 'Formal education, and what I am studying now.',
     },
     // Projects Page
     projects: {
-      title: 'Featured Projects',
-      subtitle: 'A selection of my personal and professional work',
+      title: 'Things I built on my own',
+      subtitle: 'Personal projects with open code. Professional work is on the home page.',
       types: {
         all: 'All',
         web: 'Web',
@@ -130,13 +130,13 @@ export const translations = {
     },
     // Contact Page
     contact: {
-      title: 'Let\'s Connect',
-      subtitle: 'Get in touch for opportunities, collaborations, or just to say hi!',
+      title: 'Let\'s talk',
+      subtitle: 'Open to senior full-stack and AI engineering roles, remote. Leave a note below or write to me directly.',
       form: {
-        name: 'Your Name',
-        email: 'Your Email',
-        message: 'Your Message',
-        send: 'Send Message',
+        name: 'Name',
+        email: 'Email',
+        message: 'Message',
+        send: 'Send',
         sending: 'Sending...',
         success: 'Message sent successfully!',
         error: 'Failed to send message. Please try again.',
@@ -147,8 +147,8 @@ export const translations = {
         locationValue: 'Brasília, Brazil',
         socials: 'Connect with me',
       },
-      copyEmail: 'Click to copy email',
-      emailCopied: 'Email copied!',
+      copyEmail: 'copy email',
+      emailCopied: 'copied',
     },
     // Footer
     footer: {
@@ -158,22 +158,22 @@ export const translations = {
     },
     // Blog
     blog: {
-      title: 'Blog',
-      subtitle: 'Thoughts, tutorials, and insights about software development, technology, and my journey as a developer.',
+      title: 'Notes',
+      subtitle: 'Writing about decisions, trade-offs and what I learn building software.',
       featured: 'Featured',
       readMore: 'Read more',
-      backToBlog: 'Back to Blog',
+      backToBlog: 'All notes',
       minRead: 'min read',
-      previousPost: 'Previous Post',
-      nextPost: 'Next Post',
-      searchPlaceholder: 'Search posts...',
+      previousPost: 'Previous note',
+      nextPost: 'Next note',
+      searchPlaceholder: 'Search notes...',
       categories: 'Categories',
       tags: 'Tags',
       activeFilters: 'Active filters:',
       clearAll: 'Clear all',
       clearAllFilters: 'Clear all filters',
-      noPostsFound: 'No posts found matching your filters.',
-      showingPosts: 'Showing {{current}} of {{total}} posts',
+      noPostsFound: 'No notes match these filters.',
+      showingPosts: '{{current}} of {{total}} notes',
       categoryLabels: {
         all: 'All',
         tutorial: 'Tutorials',
@@ -190,7 +190,7 @@ export const translations = {
       experience: 'Experiência',
       education: 'Formação',
       projects: 'Projetos',
-      blog: 'Blog',
+      blog: 'Notas',
       contact: 'Contato',
     },
     // Seção Hero
@@ -275,19 +275,19 @@ export const translations = {
     },
     // Página de Experiência
     experience: {
-      title: 'Experiência Profissional',
-      subtitle: 'Construindo soluções impactantes em diversos setores',
+      title: 'Onde trabalhei',
+      subtitle: 'Oito anos de software em produção, de sistemas de governo e checkout de varejo a um pipeline de LLM.',
       present: 'Atual',
     },
     // Página de Educação
     education: {
-      title: 'Educação & Aprendizado',
-      subtitle: 'Aprendizado contínuo e formação acadêmica',
+      title: 'Formação',
+      subtitle: 'Formação acadêmica e o que estou estudando agora.',
     },
     // Página de Projetos
     projects: {
-      title: 'Projetos em Destaque',
-      subtitle: 'Uma seleção dos meus trabalhos pessoais e profissionais',
+      title: 'Coisas que construí por conta própria',
+      subtitle: 'Projetos pessoais com código aberto. O trabalho profissional está na home.',
       types: {
         all: 'Todos',
         web: 'Web',
@@ -299,26 +299,26 @@ export const translations = {
         mobile: 'App Mobile',
       },
       buttons: {
-        viewCode: 'Ver Código',
-        viewDemo: 'Demo ao Vivo',
-        viewDetails: 'Ver Detalhes',
+        viewCode: 'Ver código',
+        viewDemo: 'Ver demo',
+        viewDetails: 'Ver detalhes',
         close: 'Fechar',
       },
       modal: {
-        features: 'Funcionalidades Principais',
-        technologies: 'Tecnologias Utilizadas',
+        features: 'Principais funcionalidades',
+        technologies: 'Tecnologias',
         note: 'Este é um aplicativo mobile. Veja o código no GitHub ou assista ao vídeo de demonstração.',
       },
     },
     // Página de Contato
     contact: {
-      title: 'Vamos Conversar',
-      subtitle: 'Entre em contato para oportunidades, colaborações ou apenas para dizer olá!',
+      title: 'Vamos conversar',
+      subtitle: 'Aberta a vagas sênior de engenharia full-stack e de IA, em formato remoto. Deixe um recado abaixo ou me escreva direto.',
       form: {
-        name: 'Seu Nome',
-        email: 'Seu Email',
-        message: 'Sua Mensagem',
-        send: 'Enviar Mensagem',
+        name: 'Nome',
+        email: 'Email',
+        message: 'Mensagem',
+        send: 'Enviar',
         sending: 'Enviando...',
         success: 'Mensagem enviada com sucesso!',
         error: 'Falha ao enviar mensagem. Tente novamente.',
@@ -329,8 +329,8 @@ export const translations = {
         locationValue: 'Brasília, Brasil',
         socials: 'Conecte-se comigo',
       },
-      copyEmail: 'Clique para copiar o email',
-      emailCopied: 'Email copiado!',
+      copyEmail: 'copiar email',
+      emailCopied: 'copiado',
     },
     // Rodapé
     footer: {
@@ -340,28 +340,28 @@ export const translations = {
     },
     // Blog
     blog: {
-      title: 'Blog',
-      subtitle: 'Pensamentos, tutoriais e insights sobre desenvolvimento de software, tecnologia e minha jornada como desenvolvedora.',
+      title: 'Notas',
+      subtitle: 'Escrevo sobre decisões, trade-offs e o que aprendo construindo software.',
       featured: 'Destaque',
       readMore: 'Ler mais',
-      backToBlog: 'Voltar ao Blog',
+      backToBlog: 'Todas as notas',
       minRead: 'min de leitura',
-      previousPost: 'Post Anterior',
-      nextPost: 'Próximo Post',
-      searchPlaceholder: 'Buscar posts...',
+      previousPost: 'Nota anterior',
+      nextPost: 'Próxima nota',
+      searchPlaceholder: 'Buscar notas...',
       categories: 'Categorias',
       tags: 'Tags',
       activeFilters: 'Filtros ativos:',
       clearAll: 'Limpar tudo',
       clearAllFilters: 'Limpar todos os filtros',
-      noPostsFound: 'Nenhum post encontrado com os filtros selecionados.',
-      showingPosts: 'Exibindo {{current}} de {{total}} posts',
+      noPostsFound: 'Nenhuma nota com esses filtros.',
+      showingPosts: '{{current}} de {{total}} notas',
       categoryLabels: {
         all: 'Todos',
         tutorial: 'Tutoriais',
         article: 'Artigos',
         reflection: 'Reflexões',
-        'case-study': 'Casos de Estudo',
+        'case-study': 'Estudos de caso',
       },
     },
   },

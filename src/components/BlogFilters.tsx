@@ -1,6 +1,7 @@
 import { Search, X } from 'lucide-react';
 import { PostCategory } from '../data/posts';
 import { useLanguage } from '../hooks/useLanguage';
+import { rule, muted, penText, monoLabel } from './notebook/styles';
 
 interface BlogFiltersProps {
   searchQuery: string;
@@ -10,7 +11,10 @@ interface BlogFiltersProps {
   selectedTags: string[];
   onTagToggle: (tag: string) => void;
   availableTags: string[];
+  onClear: () => void;
 }
+
+const categories = ['all', 'tutorial', 'article', 'reflection', 'case-study'] as const;
 
 const BlogFilters = ({
   searchQuery,
@@ -20,114 +24,74 @@ const BlogFilters = ({
   selectedTags,
   onTagToggle,
   availableTags,
+  onClear,
 }: BlogFiltersProps) => {
   const { t } = useLanguage();
+  const hasFilters = selectedCategory !== 'all' || selectedTags.length > 0 || searchQuery;
 
   return (
-    <div className="space-y-6">
-      {/* Search Bar */}
-      <div className="relative">
-        <Search
-          size={20}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 text-text-secondary"
-        />
+    <div className="flex flex-col gap-5">
+      <label className={`flex items-center gap-3 border-b ${rule} focus-within:border-brick dark:focus-within:border-brick-light`}>
+        <Search size={18} className={muted} aria-hidden="true" />
         <input
-          type="text"
+          type="search"
+          id="blog-search"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder={t.blog.searchPlaceholder}
-          className="w-full pl-12 pr-4 py-3 bg-accent-neon/5 border border-accent-neon/20 rounded-card text-text-primary placeholder-text-secondary focus:outline-none focus:border-accent-neon/50 focus:ring-2 focus:ring-accent-neon/20 transition-all"
+          className="flex-1 bg-transparent py-2.5 font-mono text-sm placeholder:text-brown/60 dark:placeholder:text-dark-text-secondary/60 focus:outline-none"
         />
         {searchQuery && (
-          <button
-            onClick={() => onSearchChange('')}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-text-secondary hover:text-accent-neon transition-colors"
-          >
-            <X size={20} />
+          <button type="button" onClick={() => onSearchChange('')} className={`${muted} hover:text-brick`} aria-label={t.blog.clearAll}>
+            <X size={18} />
           </button>
         )}
-      </div>
+      </label>
 
-      {/* Category Filters */}
-      <div>
-        <h3 className="text-sm font-semibold text-text-primary mb-3 uppercase tracking-wider">
-          {t.blog.categories}
-        </h3>
-        <div className="flex flex-wrap gap-2">
-          {(['all', 'tutorial', 'article', 'reflection', 'case-study'] as const).map(
-            (category) => (
-              <button
-                key={category}
-                onClick={() => onCategoryChange(category)}
-                className={`px-4 py-2 rounded-card font-medium transition-all duration-300 ${
-                  selectedCategory === category
-                    ? 'bg-accent-neon text-white shadow-neon'
-                    : 'bg-accent-neon/10 border border-accent-neon/30 text-text-secondary hover:text-accent-neon hover:border-accent-neon/50'
-                }`}
-              >
-                {t.blog.categoryLabels[category]}
-              </button>
-            )
-          )}
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-6">
+        <span className={`${monoLabel} ${muted} sm:w-24 pt-0.5`}>{t.blog.categories}</span>
+        <div className="flex flex-wrap gap-x-5 gap-y-2">
+          {categories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              aria-pressed={selectedCategory === category}
+              onClick={() => onCategoryChange(category)}
+              className={`font-mono text-[13px] lowercase border-b-2 ${
+                selectedCategory === category ? `border-brick dark:border-brick-light` : `border-transparent ${muted} hover:text-brown-dark dark:hover:text-dark-text`
+              }`}
+            >
+              {t.blog.categoryLabels[category]}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Tag Filters */}
       {availableTags.length > 0 && (
-        <div>
-          <h3 className="text-sm font-semibold text-text-primary mb-3 uppercase tracking-wider">
-            Tags
-          </h3>
-          <div className="flex flex-wrap gap-2">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-6">
+          <span className={`${monoLabel} ${muted} sm:w-24 pt-0.5`}>{t.blog.tags}</span>
+          <div className="flex flex-wrap gap-x-4 gap-y-2">
             {availableTags.map((tag) => (
               <button
                 key={tag}
+                type="button"
+                aria-pressed={selectedTags.includes(tag)}
                 onClick={() => onTagToggle(tag)}
-                className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${
-                  selectedTags.includes(tag)
-                    ? 'bg-accent-blush text-white shadow-lg'
-                    : 'bg-accent-blush/10 border border-accent-blush/30 text-text-secondary hover:text-accent-blush hover:border-accent-blush/50'
+                className={`font-mono text-[13px] ${
+                  selectedTags.includes(tag) ? `${penText} underline underline-offset-4` : `${muted} hover:text-brown-dark dark:hover:text-dark-text`
                 }`}
               >
-                {tag}
+                #{tag}
               </button>
             ))}
           </div>
         </div>
       )}
 
-      {/* Active Filters Summary */}
-      {(selectedCategory !== 'all' || selectedTags.length > 0 || searchQuery) && (
-        <div className="flex items-center gap-2 text-sm text-text-secondary">
-          <span className="font-medium">
-            {t.blog.activeFilters}
-          </span>
-          {selectedCategory !== 'all' && (
-            <span className="px-2 py-1 bg-accent-neon/20 text-accent-neon rounded">
-              {t.blog.categoryLabels[selectedCategory]}
-            </span>
-          )}
-          {selectedTags.map((tag) => (
-            <span key={tag} className="px-2 py-1 bg-accent-blush/20 text-accent-blush rounded">
-              {tag}
-            </span>
-          ))}
-          {searchQuery && (
-            <span className="px-2 py-1 bg-accent-neon/20 text-accent-neon rounded">
-              "{searchQuery}"
-            </span>
-          )}
-          <button
-            onClick={() => {
-              onSearchChange('');
-              onCategoryChange('all');
-              selectedTags.forEach((tag) => onTagToggle(tag));
-            }}
-            className="ml-2 text-accent-neon hover:underline"
-          >
-            {t.blog.clearAll}
-          </button>
-        </div>
+      {hasFilters && (
+        <button type="button" onClick={onClear} className={`self-start font-mono text-xs ${penText} hover:underline underline-offset-4`}>
+          {t.blog.clearAll}
+        </button>
       )}
     </div>
   );
